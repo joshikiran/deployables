@@ -1,0 +1,41 @@
+Drag and Drop to Table
+<div class="row">
+    <div class="col-2 drag-column">
+        <div *ngFor="let product of availableProducts">
+            <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
+                <div class="image-container">
+                    <img src="assets/showcase/images/demo/product/{{product.image}}" [alt]="product.name"
+                        class="product-image" />
+                </div>
+                <div class="product-list-detail">
+                    <h5 class="mb-2">{{product.name}}</h5>
+                    <i class="pi pi-tag product-category-icon"></i>
+                    <span class="product-category">{{product.category}}</span>
+                </div>
+                <div class="product-list-action">
+                    <h6 class="mb-2">${{product.price}}</h6>
+                    <span
+                        class="'product-badge status-'{{product.inventoryStatus.toLowerCase()}}">{{product.inventoryStatus}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-10 drop-column">
+        <div class="row height-100" pDroppable="products" (onDrop)="addToDraggedProducts()">
+            <ng-template ngFor let-product [ngForOf]="draggedProducts" let-i="index">
+                <div class="col-12 chart-area" [ngClass]="[product.class]" pDroppable="i-product"  (onDrop)="dropIProduct(i)">
+                    <div>
+                        <div class="padding">
+                            <i class="pi pi-bars" pDraggable="i-product" (onDragStart)="dragIProduct(i)" (onDragEnd)="dragEndIProduct(i)"></i>
+                            <i class="pi pi-trash" (click)="deleteIProduct(i)"></i>
+                            <i class="pi pi-cog"></i>
+                        </div>                        
+                        <div>
+                            <label>{{product.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
